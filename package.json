@@ -1,0 +1,28 @@
+{
+  "name": "showcase_backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chelsialiu/showcase.git"
+  },
+  "author": "Chelsia Liu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chelsialiu/showcase/issues"
+  },
+  "homepage": "https://github.com/chelsialiu/showcase#readme"
+}
