@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
 if (process.argv.length < 3) {
@@ -7,9 +8,11 @@ if (process.argv.length < 3) {
   process.exit(1);
 }
 
-const password = process.argv[2];
+const password = process.env.DB_PASSWORD;
+const username = process.env.DB_USERNAME;
+const db_name = process.env.DB_NAME;
 
-const url = `mongodb+srv://admin:ySlV69ZwzgIASZOI@cluster0.hg4yv.mongodb.net/showcase_backend?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${username}:${password}@cluster0.hg4yv.mongodb.net/${db_name}?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -18,21 +21,18 @@ mongoose.connect(url, {
   useCreateIndex: true,
 });
 
-const noteSchema = new mongoose.Schema({
-  content: String,
-  date: Date,
-  important: Boolean,
+const quoteSchema = new mongoose.Schema({
+  text: String,
+  favorite: Boolean,
+  upVotes: Number,
+  author: String,
 });
 
-const Note = mongoose.model("Note", noteSchema);
+const Quote = mongoose.model("Quote", quoteSchema);
 
-const note = new Note({
-  content: "HTML is Easy",
-  date: new Date(),
-  important: true,
-});
-
-note.save().then((result) => {
-  console.log("note saved!");
+Quote.find({}).then((result) => {
+  result.forEach((quote) => {
+    console.log("quote", quote);
+  });
   mongoose.connection.close();
 });

@@ -29,6 +29,11 @@ app.get("/api/notes", (request, response) => {
   response.json(notes);
 });
 
+// TO DO: Implement this
+// app.get("/api/quotes", (request, response) => {
+//   response.json(quotes);
+// });
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
