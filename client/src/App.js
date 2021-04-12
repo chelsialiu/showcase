@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 const config = {
-  apiUrl: "https://type.fit/api/quotes",
+  apiUrl: "/api/quotes",
 };
 
 function App() {

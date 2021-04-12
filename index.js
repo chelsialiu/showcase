@@ -8,6 +8,9 @@ app.use(express.json());
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "client/build")));
+
 const Quote = require("./models/quote");
 
 const PORT = process.env.PORT;
