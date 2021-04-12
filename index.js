@@ -1,5 +1,19 @@
+require("dotenv").config(); // Environment variables from .env file are globally available before code
 const express = require("express");
 const app = express();
+
+// For parsing application/json
+app.use(express.json());
+
+// For parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+const Quote = require("./models/quote");
+
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 let notes = [
   {
@@ -21,6 +35,7 @@ let notes = [
     important: true,
   },
 ];
+
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
@@ -29,12 +44,28 @@ app.get("/api/notes", (request, response) => {
   response.json(notes);
 });
 
-// TO DO: Implement this
-// app.get("/api/quotes", (request, response) => {
-//   response.json(quotes);
-// });
+/// QUOTES ///
+app.get("/api/quotes", (request, response) => {
+  Quote.find({}).then((quotes) => {
+    response.json(quotes);
+  });
+});
 
-const PORT = 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.post("/api/quotes", function (request, response) {
+  const body = request.body;
+
+  if (body.text === undefined) {
+    return response.status(400).json({ error: "content missing" });
+  }
+
+  const quote = new Quote({
+    text: body.text,
+    favorite: body.favorite,
+    upVotes: body.upVotes,
+    author: body.author,
+  });
+
+  quote.save().then((savedQuote) => {
+    response.json(savedQuote);
+  });
 });
