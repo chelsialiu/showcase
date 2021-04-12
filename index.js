@@ -9,12 +9,15 @@ app.use(express.json());
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+console.log("path.join", path.join(__dirname, "client/build"));
+
+console.log("__dirname", __dirname);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
 const Quote = require("./models/quote");
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
@@ -53,6 +56,7 @@ app.get("/api/quotes", (request, response) => {
   Quote.find({}).then((quotes) => {
     response.json(quotes);
   });
+  console.log("Sent passwords");
 });
 
 app.post("/api/quotes", function (request, response) {
