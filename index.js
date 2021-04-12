@@ -1,5 +1,6 @@
 require("dotenv").config(); // Environment variables from .env file are globally available before code
 const express = require("express");
+const path = require("path");
 const app = express();
 
 // For parsing application/json

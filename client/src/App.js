@@ -33,6 +33,7 @@ function App() {
   const getQuotes = () => {
     setQuotes([]);
     setIsLoading(true);
+    console.log("getting quotes");
     fetch(config.apiUrl)
       .then(function (response) {
         return response.json();
