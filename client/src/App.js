@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChakraProvider,
   Grid,
@@ -9,9 +9,12 @@ import {
   Text,
   Divider,
   Heading,
+  HStack,
 } from "@chakra-ui/react";
+import { StarIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
 const config = {
+  // apiUrl: "http://localhost:3001/api/quotes",
   apiUrl: "/api/quotes",
 };
 
@@ -20,6 +23,20 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [quoteOfTheDay, setQuoteOfTheDay] = useState({});
   const [today, setToday] = useState("");
+  const [buttonIsDisabled, setDisableButton] = useState(false);
+  const [hasSeenQOD, setHasSeenQOD] = useState(false);
+  const [showAllQuotes, setShowAllQuotes] = useState(false);
+
+  // TO DO: Load quotes on page load with useEffect
+  // useEffect(() => {
+  //   let mounted = true;
+  //   getQuotes().then((quotes) => {
+  //     if (mounted) {
+  //       setQuotes(quotes);
+  //     }
+  //   });
+  //   return () => (mounted = false);
+  // }, []);
 
   const Quote = ({ text, author }) => {
     return (
@@ -33,7 +50,7 @@ function App() {
   const getQuotes = () => {
     setQuotes([]);
     setIsLoading(true);
-    console.log("getting quotes");
+    console.log("getting quotes in client/App.js");
     fetch(config.apiUrl)
       .then(function (response) {
         return response.json();
@@ -48,17 +65,31 @@ function App() {
   };
 
   const getDailyQuote = () => {
-    getQuotes();
     getDate();
+    getQuotes();
     if (quotes.length > 0) {
       let randomNum = Math.floor(Math.random() * quotes.length);
       let dailyQuote = quotes[randomNum];
-      if (dailyQuote.author == "") {
+      if (dailyQuote.author == null) {
         dailyQuote.author = "Anonymous";
       }
       setQuoteOfTheDay(dailyQuote);
+      setHasSeenQOD(true);
       setIsLoading(false);
     }
+  };
+
+  const favorite = (quote) => {
+    console.log("faved quote", quote);
+    // setIsFavorite(true);
+    quote.favorite = true;
+    // console.log("favorited!", isFavorite);
+    console.log("faved quote after", quote);
+  };
+
+  const upVote = (quote) => {
+    // setNumUpVotes(numUpVotes + 1);
+    console.log("upVoted", quote);
   };
 
   const getDate = () => {
@@ -70,7 +101,14 @@ function App() {
     setToday(today);
   };
 
-  if (isLoading) return <Text size="xl">Loading...</Text>;
+  const showQuotes = () => {
+    setShowAllQuotes(true);
+    getQuotes();
+  };
+
+  const hideQuotes = () => {
+    setShowAllQuotes(false);
+  };
 
   return (
     <ChakraProvider>
@@ -108,20 +146,50 @@ function App() {
           >
             {quoteOfTheDay.author}
           </Text>
-          <Button onClick={() => getDailyQuote()} disabled={isLoading}>
-            See Another Quote
-          </Button>
+          <HStack spacing="10px">
+            {isLoading ? (
+              <Button
+                isLoading
+                loadingText="Getting Quote..."
+                disabled={isLoading}
+              />
+            ) : (
+              <Button onClick={() => getDailyQuote()} disabled={hasSeenQOD}>
+                See Today's Quote
+              </Button>
+            )}
+            {showAllQuotes ? (
+              <Button onClick={() => hideQuotes()}>Hide Quotes</Button>
+            ) : (
+              <Button onClick={() => showQuotes()}>Show More Quotes</Button>
+            )}
+            <Button
+              onClick={() => favorite({ quoteOfTheDay })}
+              disabled={isLoading}
+              leftIcon={<StarIcon />}
+            >
+              Favorite
+            </Button>
+            <Button
+              onClick={() => upVote({ quoteOfTheDay })}
+              disabled={isLoading}
+              leftIcon={<TriangleUpIcon />}
+            >
+              Up Vote
+            </Button>
+          </HStack>
         </Container>
-        {/* <Flex backgroundColor="black">
-          <Button onClick={() => getQuotes()} disabled={isLoading}>
-            All Quotes
-          </Button>
-          <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-            {quotes.map((quote) => (
-              <Quote text={quote.text} author={quote.author}></Quote>
-            ))}
-          </Grid>
-        </Flex> */}
+        {showAllQuotes ? (
+          <Flex backgroundColor="black">
+            <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+              {quotes.map((quote) => (
+                <Quote text={quote.text} author={quote.author}></Quote>
+              ))}
+            </Grid>
+          </Flex>
+        ) : (
+          <span></span>
+        )}
       </Container>
     </ChakraProvider>
   );

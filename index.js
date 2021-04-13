@@ -2,6 +2,10 @@ require("dotenv").config(); // Environment variables from .env file are globally
 const express = require("express");
 const path = require("path");
 const app = express();
+const cors = require("cors");
+
+// Allow requests from other origins by using cors middleware
+app.use(cors());
 
 // For parsing application/json
 app.use(express.json());
@@ -17,7 +21,7 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 const Quote = require("./models/quote");
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
@@ -53,10 +57,11 @@ app.get("/api/notes", (request, response) => {
 
 /// QUOTES ///
 app.get("/api/quotes", (request, response) => {
+  console.log("getting quotes in main index.js");
   Quote.find({}).then((quotes) => {
     response.json(quotes);
   });
-  console.log("Sent passwords");
+  console.log("Sent passwords in main index.js");
 });
 
 app.post("/api/quotes", function (request, response) {
@@ -75,5 +80,11 @@ app.post("/api/quotes", function (request, response) {
 
   quote.save().then((savedQuote) => {
     response.json(savedQuote);
+  });
+});
+
+app.post("/api/saveQuote/:id", (request, response) => {
+  Quote.findByIdAndUpdate(request.params.id).then((quote) => {
+    response.json(quote);
   });
 });
