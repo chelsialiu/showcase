@@ -114,55 +114,55 @@ function Demo() {
   };
 
   return (
-    <ChakraProvider>
-      <Container maxWidth="100vm" backgroundColor="turquoise">
-        <Heading
-          as="h1"
-          size="4xl"
-          textAlign="center"
-          padding="4vh"
-          color="white"
-          backgroundColor="blue.700"
-          w="100%"
-        >
-          Quote of the Day
+    <Container maxWidth="100vm" backgroundColor="turquoise">
+      <Heading
+        as="h1"
+        size="4xl"
+        textAlign="center"
+        padding="4vh"
+        marginTop="3vh"
+        color="white"
+        backgroundColor="blue.700"
+        w="100%"
+      >
+        Quote of the Day
+      </Heading>
+      <Container minW="100vh" minH="50vh" centerContent padding="2vh">
+        <Heading as="h3" color="white" padding="3vh">
+          {today}
         </Heading>
-        <Container minW="100vh" minH="50vh" centerContent padding="2vh">
-          <Heading as="h3" color="white" padding="3vh">
-            {today}
-          </Heading>
-          <Divider />
-          <Text
-            fontSize="4xl"
-            textAlign="center"
-            color="gray.600"
-            paddingTop="2vh"
-          >
-            {quoteOfTheDay.text}
-          </Text>
-          <Text
-            fontSize="2xl"
-            textAlign="center"
-            color="gray.600"
-            paddingTop="2vh"
-            paddingBottom="2vh"
-          >
-            {quoteOfTheDay.author}
-          </Text>
-          <HStack spacing="10px">
-            {isLoading ? (
-              <Button disabled={isLoading}>See Today's Quote</Button>
-            ) : (
-              <Button onClick={() => getDailyQuote()} disabled={hasSeenQOD}>
-                See Today's Quote
-              </Button>
-            )}
-            {showAllQuotes ? (
-              <Button onClick={() => hideQuotes()}>Hide Quotes</Button>
-            ) : (
-              <Button onClick={() => showQuotes()}>Show More Quotes</Button>
-            )}
-            {/* <Button
+        <Divider />
+        <Text
+          fontSize="4xl"
+          textAlign="center"
+          color="gray.600"
+          paddingTop="2vh"
+        >
+          {quoteOfTheDay.text}
+        </Text>
+        <Text
+          fontSize="2xl"
+          textAlign="center"
+          color="gray.600"
+          paddingTop="2vh"
+          paddingBottom="2vh"
+        >
+          {quoteOfTheDay.author}
+        </Text>
+        <HStack spacing="10px">
+          {isLoading ? (
+            <Button disabled={isLoading}>See Today's Quote</Button>
+          ) : (
+            <Button onClick={() => getDailyQuote()} disabled={hasSeenQOD}>
+              See Today's Quote
+            </Button>
+          )}
+          {showAllQuotes ? (
+            <Button onClick={() => hideQuotes()}>Hide Quotes</Button>
+          ) : (
+            <Button onClick={() => showQuotes()}>Show More Quotes</Button>
+          )}
+          {/* <Button
               onClick={() => favorite({ quoteOfTheDay })}
               disabled={isLoading}
               leftIcon={<StarIcon />}
@@ -176,21 +176,20 @@ function Demo() {
             >
               Up Vote
             </Button> */}
-          </HStack>
-        </Container>
-        {showAllQuotes ? (
-          <Flex backgroundColor="black">
-            <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-              {quotes.map((quote) => (
-                <Quote text={quote.text} author={quote.author}></Quote>
-              ))}
-            </Grid>
-          </Flex>
-        ) : (
-          <span></span>
-        )}
+        </HStack>
       </Container>
-    </ChakraProvider>
+      {showAllQuotes ? (
+        <Flex backgroundColor="black">
+          <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+            {quotes.map((quote) => (
+              <Quote text={quote.text} author={quote.author}></Quote>
+            ))}
+          </Grid>
+        </Flex>
+      ) : (
+        <span></span>
+      )}
+    </Container>
   );
 }
 
