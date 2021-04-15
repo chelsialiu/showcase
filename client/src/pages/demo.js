@@ -151,11 +151,7 @@ function Demo() {
           </Text>
           <HStack spacing="10px">
             {isLoading ? (
-              <Button
-                isLoading
-                loadingText="Getting Quote..."
-                disabled={isLoading}
-              />
+              <Button disabled={isLoading}>See Today's Quote</Button>
             ) : (
               <Button onClick={() => getDailyQuote()} disabled={hasSeenQOD}>
                 See Today's Quote
@@ -166,7 +162,7 @@ function Demo() {
             ) : (
               <Button onClick={() => showQuotes()}>Show More Quotes</Button>
             )}
-            <Button
+            {/* <Button
               onClick={() => favorite({ quoteOfTheDay })}
               disabled={isLoading}
               leftIcon={<StarIcon />}
@@ -179,7 +175,7 @@ function Demo() {
               leftIcon={<TriangleUpIcon />}
             >
               Up Vote
-            </Button>
+            </Button> */}
           </HStack>
         </Container>
         {showAllQuotes ? (

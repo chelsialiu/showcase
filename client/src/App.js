@@ -24,7 +24,7 @@ function App() {
       zIndex="3"
       minH="95px"
       h={{ base: "15vw", md: "12vw", lg: "9vw", xl: "6vw" }}
-      position="fixed"
+      // position="fixed"
     >
       <Box w="100%" p="10px">
         <Router>
