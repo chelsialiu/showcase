@@ -1,5 +1,6 @@
 import { Heading, Flex, Text, Box, Center, Image } from "@chakra-ui/react";
 import TechStackImg from "../images/TechStack&Architecture.png";
+
 function TechStackArchitecture() {
   return (
     <>

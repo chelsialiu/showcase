@@ -13,9 +13,6 @@ app.use(express.json());
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-console.log("path.join", path.join(__dirname, "client/build"));
-
-console.log("__dirname", __dirname);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
@@ -57,11 +54,9 @@ app.get("/api/notes", (request, response) => {
 
 /// QUOTES ///
 app.get("/api/quotes", (request, response) => {
-  console.log("getting quotes in main index.js");
   Quote.find({}).then((quotes) => {
     response.json(quotes);
   });
-  console.log("Sent passwords in main index.js");
 });
 
 app.post("/api/quotes", function (request, response) {

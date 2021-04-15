@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  ChakraProvider,
   Grid,
   Box,
   Container,
@@ -53,7 +52,6 @@ function Demo() {
   const getQuotes = () => {
     setQuotes([]);
     setIsLoading(true);
-    console.log("getting quotes in client/App.js");
     fetch(config.apiUrl)
       .then(function (response) {
         return response.json();
@@ -83,11 +81,8 @@ function Demo() {
   };
 
   const favorite = (quote) => {
-    console.log("faved quote", quote);
     // setIsFavorite(true);
     quote.favorite = true;
-    // console.log("favorited!", isFavorite);
-    console.log("faved quote after", quote);
   };
 
   const upVote = (quote) => {
