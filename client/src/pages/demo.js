@@ -15,10 +15,10 @@ import { StarIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
 const config = {
   // Uncomment for local testing purposes
-  apiUrl: "http://localhost:3001/api/quotes",
+  // apiUrl: "http://localhost:3001/api/quotes",
 
   // Uncomment for production build and deployment
-  // apiUrl: "/api/quotes",
+  apiUrl: "/api/quotes",
 };
 
 function Demo() {
